@@ -82,12 +82,18 @@
 -(void)setupTestModel {
     self.testModel = [[NSMutableArray alloc]init];
     //Create some TestData
-    for (int i = 0 ; i <3; i++) {
+    for (int i = 0 ; i <100; i++) {
         int r = arc4random() % 5; // 5 different Kinds of Elements
-        if (r == 1 || r == 2) {
+        if (r == 1) {
             [self.testModel addObject:@"A"]; // A is Fullspan
         } else [self.testModel addObject:@"B"]; // B is Random element
     }
+    
+    /*
+    [self.testModel addObject:@"B"];
+    [self.testModel addObject:@"A"];
+    [self.testModel addObject:@"A"];
+    [self.testModel addObject:@"A"];*/
 }
 
 -(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
