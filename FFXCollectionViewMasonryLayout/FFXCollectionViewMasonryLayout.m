@@ -100,10 +100,10 @@
     
 }
 
+// Returns next fullspan or single span element
 -(NSIndexPath*)getNextElement:(BOOL)allowFullspan {
     NSIndexPath * indexPath = nil;
     while (!indexPath) {
-        
         BOOL useFullspan = allowFullspan || (self.masterStack.count == 0);
         NSIndexPath * tempIndexPath = nil;
         if (useFullspan && self.fullSpanStack.count){
@@ -140,81 +140,83 @@
     
     [self prepareParameters];
     CGFloat stackedColumns = 0;                                                                                 // Stores how much elements stacked allready
-    CGFloat fullWidth = self.collectionView.frame.size.width;                                                   // Width of CollectionView
-    CGFloat availableSpaceExcludingPadding = fullWidth - (self.interItemSpacing * (self.numberOfColums + 1));   // Available space withput padding
-    CGFloat itemWidth = availableSpaceExcludingPadding / self.numberOfColums;                                   // Width of items
+    // Width of items
     NSInteger numSections = [self.collectionView numberOfSections];                                             // Number of Sections in CollectionView
     
     BOOL beforeWasFullSpan = NO;
-    NSIndexPath *indexPath;
     
     // Iterate through all sections
     for(NSInteger section = 0; section < numSections; section++)  {
         [self prepareMasterStackForSection:section];
         NSIndexPath * nextItem = nil;
+        
+        // Replace stackedColumns withFunctionsThat calculates how expensive it is to rescale every element
         while ((nextItem = [self getNextElement:!stackedColumns])) {
             
-            
-            // Check fullspanStack and try this element first
-            indexPath = nextItem;
-            // Create the itemAttributes for the appropriate element
-            UICollectionViewLayoutAttributes * itemAttributes=
-            [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-            
-            CGSize size = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:indexPath];
+            CGSize size = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:nextItem];
             BOOL isCurrentElementFullspan = [self checkIfElementIsFullSpan:size];
             // If current Element is a fullSpan Element
             if (isCurrentElementFullspan) {
-                // and stack colums bigger then 0 & if cell is last cell
-                // crashed wenn 2 fullspan hintereinander kommen
-                    // If element before was a fullspan element recalculate height of last elements
-                if (!beforeWasFullSpan) {
-                    [self recalculateHeightOfAllElementsAfterFullspanElement];
-                }
-                CGFloat x = self.interItemSpacing;
-                CGFloat y = [self highestValueOfAllLastColumns];
-                itemAttributes.frame = CGRectMake(x, y,self.collectionView.frame.size.width-self.interItemSpacing*2, size.height); // Aspect Ration stuff has to go here
-                itemAttributes.alpha = 0.5;
-                y+= size.height;
-                y+= self.interItemSpacing;
-                [self setLastYValueForAllColums:@(y)];
-                self.layoutInfo[indexPath] = itemAttributes;
-                self.yValueAfterFullSpan = y + size.height;
+                [self appendFullSpanElement:nextItem beforeWasFullSpan:beforeWasFullSpan];
                 stackedColumns = 0; // Column count wieder auf 0 setzen
-                [self prepareAllElementsAfterFullSpan];
-                [self.masterStack removeObject:indexPath];
                 beforeWasFullSpan = YES;
             }
             
             else {
-                
-                NSInteger columnWidthLowestYValue = [self getLastColumnWitLowestYValue];
-                CGFloat x = self.interItemSpacing + (self.interItemSpacing + itemWidth) * columnWidthLowestYValue;
-                CGFloat y = [[self.lastYValueForColumns objectAtIndex:columnWidthLowestYValue]floatValue];
-                CGFloat height = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:indexPath].height;
-                CGFloat width = itemWidth;
-                itemAttributes.frame = CGRectMake(x, y, width, height);
-                
-                y+= height;
-                y+= self.interItemSpacing;
-                [self.lastYValueForColumns replaceObjectAtIndex:columnWidthLowestYValue withObject:@(y)];
+                [self appendElement:nextItem];
+                beforeWasFullSpan = NO;
                 stackedColumns ++;
-                
                 if(stackedColumns == self.numberOfColums) {
                     stackedColumns = 0;
                 }
-                self.layoutInfo[indexPath] = itemAttributes;
-                NSMutableArray * tempPointer = [self.allElementsAfterFullspan objectForKey:@(columnWidthLowestYValue)];
-                [tempPointer addObject:indexPath];
-                beforeWasFullSpan = NO;
-                [self.masterStack removeObject:indexPath];
             }
-            
-            //NSLog(@"MASTER STACK:%@",self.masterStack);
         }
     }
-    
-    NSLog(@"****************STACK COUNT%lu*****************",(unsigned long)[self.fullSpanStack count]);
+}
+
+-(BOOL)collectionViewLayoutShouldRescaleElements:(NSMutableArray*)lastYValuesForAllColumns{
+    return YES;
+}
+
+-(void)appendFullSpanElement:(NSIndexPath*)item beforeWasFullSpan:(BOOL)beforeWasFullSpan {
+    CGSize size = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:item];
+    UICollectionViewLayoutAttributes * itemAttributes=
+    [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:item];
+    if (!beforeWasFullSpan) {
+        [self recalculateHeightOfAllElementsAfterFullspanElement];
+    }
+    CGFloat x = self.interItemSpacing;
+    CGFloat y = [self highestValueOfAllLastColumns];
+    itemAttributes.frame = CGRectMake(x, y,self.collectionView.frame.size.width-self.interItemSpacing*2, size.height); // Aspect Ration stuff has to go here
+    itemAttributes.alpha = 0.5;
+    y+= size.height;
+    y+= self.interItemSpacing;
+    [self setLastYValueForAllColums:@(y)];
+    self.layoutInfo[item] = itemAttributes;
+    self.yValueAfterFullSpan = y + size.height;
+    [self prepareAllElementsAfterFullSpan];
+    [self.masterStack removeObject:item];
+}
+
+-(void)appendElement:(NSIndexPath*)item {
+    CGFloat fullWidth = self.collectionView.frame.size.width;                                                   // Width of CollectionView
+    CGFloat availableSpaceExcludingPadding = fullWidth - (self.interItemSpacing * (self.numberOfColums + 1));   // Available space withput padding
+    CGFloat itemWidth = availableSpaceExcludingPadding / self.numberOfColums;
+    UICollectionViewLayoutAttributes * itemAttributes=
+    [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:item];
+    NSInteger columnWidthLowestYValue = [self getLastColumnWitLowestYValue];
+    CGFloat x = self.interItemSpacing + (self.interItemSpacing + itemWidth) * columnWidthLowestYValue;
+    CGFloat y = [[self.lastYValueForColumns objectAtIndex:columnWidthLowestYValue]floatValue];
+    CGFloat height = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:item].height;
+    CGFloat width = itemWidth;
+    itemAttributes.frame = CGRectMake(x, y, width, height);
+    y+= height;
+    y+= self.interItemSpacing;
+    [self.lastYValueForColumns replaceObjectAtIndex:columnWidthLowestYValue withObject:@(y)];
+    self.layoutInfo[item] = itemAttributes;
+    NSMutableArray * tempPointer = [self.allElementsAfterFullspan objectForKey:@(columnWidthLowestYValue)];
+    [tempPointer addObject:item];
+    [self.masterStack removeObject:item];
 }
 
 -(void)recalculateHeightOfAllElementsAfterFullspanElement{
