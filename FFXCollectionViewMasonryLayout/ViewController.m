@@ -67,7 +67,7 @@
        return temp;
     } else {
         // Random string
-        CGSize temp = CGSizeMake(self.collectionView.frame.size.width/2, 100 + (arc4random() % 400));
+        CGSize temp = CGSizeMake(self.collectionView.frame.size.width/2, 50 + (arc4random() % 500));
         return temp;
     }
 }
@@ -88,12 +88,6 @@
             [self.testModel addObject:@"A"]; // A is Fullspan
         } else [self.testModel addObject:@"B"]; // B is Random element
     }
-    
-    /*
-    [self.testModel addObject:@"B"];
-    [self.testModel addObject:@"A"];
-    [self.testModel addObject:@"A"];
-    [self.testModel addObject:@"A"];*/
 }
 
 -(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
