@@ -67,7 +67,7 @@
        return temp;
     } else {
         // Random string
-        CGSize temp = CGSizeMake(self.collectionView.frame.size.width/2, 50 + (arc4random() % 500));
+        CGSize temp = CGSizeMake(self.collectionView.frame.size.width/2, 100 + (arc4random() % 300));
         return temp;
     }
 }
@@ -82,7 +82,7 @@
 -(void)setupTestModel {
     self.testModel = [[NSMutableArray alloc]init];
     //Create some TestData
-    for (int i = 0 ; i <100; i++) {
+    for (int i = 0 ; i <3; i++) {
         int r = arc4random() % 5; // 5 different Kinds of Elements
         if (r == 1) {
             [self.testModel addObject:@"A"]; // A is Fullspan

@@ -137,33 +137,37 @@
 // Returns next fullspan or single span element
 -(NSIndexPath*)getNextElement:(BOOL)allowFullspan {
     NSIndexPath * indexPath = nil;
+    
     while (!indexPath) {
+        // Get Element from right stack
         BOOL useFullspan = allowFullspan || (self.masterStack.count == 0);
         NSIndexPath * tempIndexPath = nil;
+        
+        // If masterStack count is Empty and we allowfullspan check if there is an element on a fullspan stack
+        // If so, use this element
         if (useFullspan && self.fullSpanStack.count){
-            tempIndexPath = [self.fullSpanStack objectAtIndex:0];
+            indexPath = [self.fullSpanStack objectAtIndex:0];
             [self.fullSpanStack removeObjectAtIndex:0];
-        } else if(self.masterStack.count >0){
+            break;
+        }
+        
+        else if(self.masterStack.count >0){
             
             tempIndexPath = [self.masterStack objectAtIndex:0];
             [self.masterStack removeObjectAtIndex:0];
             
-        } else {
-            break;
-        }
-        
-        if (useFullspan) {
-            indexPath = tempIndexPath;
-        } else {
-            // Get requested size from delegate
             CGSize size = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:tempIndexPath];
-            //and check if Element is a fullspan or not
             BOOL isCurrentElementFullspan = [self checkIfElementIsFullSpan:size];
             if (isCurrentElementFullspan) {
                 [self.fullSpanStack addObject:tempIndexPath];
             } else {
                 indexPath = tempIndexPath;
             }
+            
+        }
+        // If both stacks empty return with nil
+        else {
+            break;
         }
     }
     
