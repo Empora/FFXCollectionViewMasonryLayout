@@ -1,11 +1,13 @@
-Pod::Spec.new do |spec|
-spec.name         = 'FFXCollectionViewMasonryLayout'
-spec.version      = '1.0'
-spec.license      = { :type => 'MIT' }
-spec.homepage     = 'https://github.com/Empora/FFXCollectionViewMasonryLayout.git'
-spec.authors      = { 'Sebastian Boldt' => 'sebastian.boldt@empora.com' }
-spec.summary      = 'Masonry UICollectionViewLayout'
-spec.source       = { :git => 'https://github.com/Empora/FFXCollectionViewMasonryLayout.git'}
-spec.source_files = 'FFXCollectionViewMasonryLayout/*'
-spec.framework    = 'UIKit'
+Pod::Spec.new do |s|
+s.name         = 'FFXCollectionViewMasonryLayout'
+s.version      = '1.0'
+s.summary      = 'UICollectionView Masonry Layout'
+s.author = {
+'Lars Anderson' => 'sebastian.boldt@empora.com'
+}
+s.source = {
+:git => 'https://github.com/Empora/FFXCollectionViewMasonryLayout.git'
+}
+s.source_files = 'Source/*.{h,m}'
+s.dependency     'UIKit'
 end
