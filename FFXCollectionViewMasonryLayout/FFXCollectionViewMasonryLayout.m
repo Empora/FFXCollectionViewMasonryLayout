@@ -56,6 +56,7 @@
 //
 
 #import "FFXCollectionViewMasonryLayout.h"
+#import "FFXCollectionViewMasonryLayoutLogic.h"
 // Private Interface
 @interface FFXCollectionViewMasonryLayout()
 
