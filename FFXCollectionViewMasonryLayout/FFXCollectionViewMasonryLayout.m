@@ -60,10 +60,9 @@
 // Private Interface
 @interface FFXCollectionViewMasonryLayout()
 
-@property (nonatomic, strong) NSMutableDictionary   * layoutInfo;            // stores all relevant Information about the CollectionViewCell
+@property (nonatomic, strong) NSMutableArray   *layoutInfo;            // stores all relevant Information about the CollectionViewCell
 @property (nonatomic,strong)  NSMutableArray        * masterStack;
-@property (nonatomic, strong) NSMutableArray        * lastYValueForColumns;
-@property (nonatomic, strong) NSMutableArray        * layoutInformation;    // Array layout info
+@property (nonatomic, strong) NSMutableArray        *lastYValueForColumns;
 @end
 
 @implementation FFXCollectionViewMasonryLayout
@@ -72,7 +71,7 @@
 
 // sets intital values
 -(void)prepareParameters {
-    self.layoutInfo = [NSMutableDictionary dictionary];
+    self.layoutInfo = [[NSMutableArray alloc]init];
 }
 
 
@@ -86,7 +85,6 @@
     NSInteger numSections = [self.collectionView numberOfSections];
     for(NSInteger section = 0; section < numSections; section++)  {
         
-        // Ersten Y Wert mit übergeben
         FFXCollectionViewMasonryLayoutLogic * layoutLogic =[[FFXCollectionViewMasonryLayoutLogic alloc]init];
         NSInteger numberOfColumns = 2;
         layoutLogic.section = section;
@@ -104,9 +102,7 @@
             return itemSize;
         }];
         
-        self.lastYValueForColumns = layoutLogic.lastYValueForColumns; // allValues für Array
-        // Add layoutAttributes to local variable
-        [self.layoutInfo addEntriesFromDictionary:layoutAttributes];
+        [self.layoutInfo addObjectsFromArray:[layoutAttributes allValues]];
     }
 }
 
@@ -136,14 +132,11 @@
     NSMutableArray *allAttributes = [NSMutableArray arrayWithCapacity:self.layoutInfo.count];
     
     // Schiebe alle Attribute für die Sichtbaren Element in den das Attributarray
-    [self.layoutInfo enumerateKeysAndObjectsUsingBlock:^(NSIndexPath *indexPath,
-                                                         UICollectionViewLayoutAttributes *attributes,
-                                                         BOOL *stop) {
-        
+    for (UICollectionViewLayoutAttributes * attributes in self.layoutInfo) {
         if (CGRectIntersectsRect(rect, attributes.frame)) {
             [allAttributes addObject:attributes];
         }
-    }];
+    }
     return allAttributes;
 }
 

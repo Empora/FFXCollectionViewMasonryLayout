@@ -53,9 +53,7 @@
             }
         }
     }
-    NSLog(@"layoutInfo:%@",self.layoutInfo);
     return self.layoutInfo;
-
 }
 
 //Creates a Master Stack of all IndexPathes
