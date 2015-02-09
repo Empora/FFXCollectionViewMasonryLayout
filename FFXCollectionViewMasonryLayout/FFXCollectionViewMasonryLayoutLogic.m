@@ -60,7 +60,7 @@
 -(void)prepareMasterStackForSection:(NSInteger)numberOfItems {
     self.masterStack = [[NSMutableArray alloc]init];
     for(NSInteger item = 0; item < numberOfItems;item++){
-        [self.masterStack insertObject:[NSIndexPath indexPathForItem:item inSection:self.section] atIndex:self.masterStack.count];
+        [self.masterStack insertObject:[NSIndexPath indexPathForItem:item inSection:0] atIndex:self.masterStack.count];
     }
     
 }

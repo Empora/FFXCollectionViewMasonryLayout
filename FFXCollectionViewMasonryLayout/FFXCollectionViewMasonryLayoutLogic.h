@@ -15,7 +15,6 @@ typedef CGSize (^FFXMeasureItemBlock)(NSInteger itemIndex,CGRect frame);
 
 @property   (nonatomic,assign)      NSInteger numberOfColums;
 @property   (nonatomic,assign)      NSInteger numberOfItems;
-@property   (nonatomic,assign)      NSInteger section;
 @property   (nonatomic,assign)      NSInteger interItemSpacing;
 @property   (nonatomic, strong)     NSMutableArray *lastYValueForColumns;
 @property   (nonatomic,assign)      CGRect collectionViewFrame;

@@ -87,9 +87,8 @@
         
         FFXCollectionViewMasonryLayoutLogic * layoutLogic =[[FFXCollectionViewMasonryLayoutLogic alloc]init];
         NSInteger numberOfColumns = 2;
-        layoutLogic.section = section;
-        layoutLogic.numberOfColums = numberOfColumns;
         layoutLogic.interItemSpacing = 2;
+        layoutLogic.numberOfColums = numberOfColumns;
         layoutLogic.numberOfItems = [self.collectionView numberOfItemsInSection:section];
         layoutLogic.collectionViewFrame = self.collectionView.frame;
         if(!self.lastYValueForColumns) {
@@ -143,19 +142,12 @@
 // Returns the Contentsize for the Whole CollectionView
 // Berechne die Höhe des CollectionViews
 // Nutzt für die höhen Berechnung den zuletzt gespiecherten Y-Wert
+-(CGFloat)highestValueOfAllLastColumns{
+    return [[self.lastYValueForColumns valueForKeyPath:@"@max.intValue"] floatValue];
+}
+
 -(CGSize) collectionViewContentSize {
-    
-    NSUInteger currentColumn = 0;
-    CGFloat maxHeight = 0;
-    do {
-        CGFloat height = [[self.lastYValueForColumns objectAtIndex:currentColumn]doubleValue];
-        if(height > maxHeight)
-            maxHeight = height;
-        currentColumn ++;
-    } while (currentColumn < self.numberOfColums);
-    
-    // Liefere die Größe des CollectionViews zurück
-    return CGSizeMake(self.collectionView.frame.size.width, maxHeight);
+    return CGSizeMake(self.collectionView.frame.size.width, [self highestValueOfAllLastColumns] );
 }
 @end
 
