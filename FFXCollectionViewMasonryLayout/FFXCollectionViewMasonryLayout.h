@@ -20,8 +20,5 @@
 @end
 
 @interface FFXCollectionViewMasonryLayout : UICollectionViewLayout
-@property(nonatomic,assign)NSInteger numberOfColums;    // Number of Columns that should be displayed
-@property(nonatomic,assign)NSInteger interItemSpacing;  // Spacing between items
-
 @property(nonatomic,weak) IBOutlet id<UICollectionViewDelegateFFXMasonryLayout> delegate; // delegate that returns size for each Item
 @end

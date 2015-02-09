@@ -60,8 +60,8 @@
 // Private Interface
 @interface FFXCollectionViewMasonryLayout()
 
-@property (nonatomic, strong) NSMutableArray   *layoutInfo;            // stores all relevant Information about the CollectionViewCell
-@property (nonatomic,strong)  NSMutableArray        * masterStack;
+@property (nonatomic, strong) NSMutableArray        *layoutInfo;            // stores all relevant Information about the CollectionViewCell
+@property (nonatomic,strong)  NSMutableArray        *masterStack;
 @property (nonatomic, strong) NSMutableArray        *lastYValueForColumns;
 @end
 
@@ -73,8 +73,6 @@
 -(void)prepareParameters {
     self.layoutInfo = [[NSMutableArray alloc]init];
 }
-
-
 
 // Doest inital Calculations for layouting everything
 -(void)prepareLayout{
@@ -124,13 +122,10 @@
      return YES;
 }
 
-
 #pragma mark - Functions to override (UICollectionViewLayout)
 // Returns Layoutattributes for Elements in a specific rect
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
     NSMutableArray *allAttributes = [NSMutableArray arrayWithCapacity:self.layoutInfo.count];
-    
-    // Schiebe alle Attribute für die Sichtbaren Element in den das Attributarray
     for (UICollectionViewLayoutAttributes * attributes in self.layoutInfo) {
         if (CGRectIntersectsRect(rect, attributes.frame)) {
             [allAttributes addObject:attributes];
