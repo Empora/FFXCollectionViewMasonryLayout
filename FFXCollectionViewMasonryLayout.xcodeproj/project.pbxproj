@@ -17,6 +17,10 @@
 		AF537F131A84E01100AC9078 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF537F111A84E01100AC9078 /* ViewController.m */; };
 		AF537F161A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = AF537F151A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m */; };
 		AF537F171A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = AF537F151A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m */; };
+		AFB7CA481A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AFB7CA471A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec */; };
+		AFB7CA491A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AFB7CA471A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec */; };
+		AFB7CA4E1A88BAC000601B57 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = AFB7CA4D1A88BAC000601B57 /* LICENSE.txt */; };
+		AFB7CA4F1A88BAC000601B57 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = AFB7CA4D1A88BAC000601B57 /* LICENSE.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,8 @@
 		AF537F111A84E01100AC9078 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AF537F141A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFXCollectionViewMasonryLayout.h; sourceTree = "<group>"; };
 		AF537F151A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFXCollectionViewMasonryLayout.m; sourceTree = "<group>"; };
+		AFB7CA471A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FFXCollectionViewMasonryLayout.podspec; path = FFXCollectionViewMasonryLayout/FFXCollectionViewMasonryLayout.podspec; sourceTree = "<group>"; };
+		AFB7CA4D1A88BAC000601B57 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.txt; path = FFXCollectionViewMasonryLayout/LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,8 @@
 		AF537EDE1A84DFD100AC9078 = {
 			isa = PBXGroup;
 			children = (
+				AFB7CA4D1A88BAC000601B57 /* LICENSE.txt */,
+				AFB7CA471A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec */,
 				AF537EE91A84DFD100AC9078 /* FFXCollectionViewMasonryLayout */,
 				AF537F031A84DFD100AC9078 /* FFXCollectionViewMasonryLayoutTests */,
 				AF537EE81A84DFD100AC9078 /* Products */,
@@ -206,8 +214,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFB7CA481A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec in Resources */,
 				AF537EF61A84DFD100AC9078 /* Main.storyboard in Resources */,
 				AF537EFB1A84DFD100AC9078 /* LaunchScreen.xib in Resources */,
+				AFB7CA4E1A88BAC000601B57 /* LICENSE.txt in Resources */,
 				AF537EF81A84DFD100AC9078 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +226,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFB7CA4F1A88BAC000601B57 /* LICENSE.txt in Resources */,
+				AFB7CA491A88B94000601B57 /* FFXCollectionViewMasonryLayout.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +436,7 @@
 				AF537F0C1A84DFD100AC9078 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AF537F0D1A84DFD100AC9078 /* Build configuration list for PBXNativeTarget "FFXCollectionViewMasonryLayoutTests" */ = {
 			isa = XCConfigurationList;
@@ -432,6 +445,7 @@
 				AF537F0F1A84DFD100AC9078 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

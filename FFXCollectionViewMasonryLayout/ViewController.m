@@ -82,7 +82,7 @@
 -(void)setupTestModel {
     self.testModel = [[NSMutableArray alloc]init];
     //Create some TestData
-    for (int i = 0 ; i <3; i++) {
+    for (int i = 0 ; i <200; i++) {
         int r = arc4random() % 5; // 5 different Kinds of Elements
         if (r == 1) {
             [self.testModel addObject:@"A"]; // A is Fullspan
