@@ -57,7 +57,7 @@
 
 // Returns Sections to display in CollectionView
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 10;
+    return 1;
 }
 
 #pragma mark - CustomCollectionViewDelegate

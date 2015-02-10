@@ -16,10 +16,12 @@
  row: @(2) --> @[IndexPath1,IndexPath2 ......, IndexPathN]
  row: @(3) --> @[IndexPath1,IndexPath2 ......, IndexPathN] */
 @property (nonatomic,strong) NSMutableDictionary * allElementsAfterFullspan;
+@property (nonatomic,assign) BOOL firstRow;
 @end
 @implementation FFXCollectionViewMasonryLayoutLogic
 
 -(void)prepare{
+    self.firstRow = YES;
     self.allElementsAfterFullspan = [[NSMutableDictionary alloc]init];
     self.fullSpanStack = [[NSMutableArray alloc]init];
     self.layoutInfo = [NSMutableDictionary dictionary];
@@ -49,6 +51,7 @@
             stackedColumns ++;
             if(stackedColumns == self.numberOfColums) {
                 stackedColumns = 0;
+                self.firstRow = NO;
             }
         }
     }
@@ -100,7 +103,10 @@
             break;
         }
     }
-    
+    if(indexPath == nil){
+        CGFloat contentHeight = [self highestValueOfAllLastColumns]+self.padding.bottom;
+        [self setLastYValueForAllColums:[NSNumber numberWithFloat:contentHeight]];
+    }
     return indexPath;
 }
 
@@ -113,9 +119,12 @@
     CGSize size = measurementBlock(item.row,CGRectZero);
     CGFloat x =  self.padding.left;
     CGFloat y = [self highestValueOfAllLastColumns];
+    if (self.firstRow) {
+        y+= self.padding.top;
+    }
     CGFloat width = self.collectionViewFrame.size.width-self.padding.right-self.padding.left;
-    CGFloat height = size.height *(width/size.width);
-    itemAttributes.frame = CGRectMake(x, y,width,height); // Aspect Ratio stuff has to go here
+    //CGFloat height = size.height *(width/size.width);
+    itemAttributes.frame = CGRectMake(x, y,width,size.height); // Aspect Ratio stuff has to go here
     itemAttributes.alpha = 0.5;
     y+= size.height;
     y+= self.interItemSpacing;
@@ -138,6 +147,9 @@
         x = self.padding.left +((columnWidthLowestYValue)*self.interItemSpacing)+((columnWidthLowestYValue)*[self getItemWidth]);
     }
     CGFloat y = [[self.lastYValueForColumns objectAtIndex:columnWidthLowestYValue]floatValue];
+    if (self.firstRow) {
+        y+= self.padding.top;
+    }
     CGFloat height = measurementBlock(item.row,CGRectZero).height;
     CGFloat width = [self getItemWidth];
     itemAttributes.frame = CGRectMake(x, y, width, height);
@@ -151,7 +163,7 @@
 
 -(CGFloat)getItemWidth {
     CGFloat fullWidth = self.collectionViewFrame.size.width;
-    CGFloat availableSpaceExcludingPadding = fullWidth - (self.padding.left + self.padding.right);
+    CGFloat availableSpaceExcludingPadding = fullWidth - (self.padding.left + self.padding.right) - ((self.numberOfColums-1)*self.interItemSpacing);
     return (availableSpaceExcludingPadding / self.numberOfColums);
 }
 

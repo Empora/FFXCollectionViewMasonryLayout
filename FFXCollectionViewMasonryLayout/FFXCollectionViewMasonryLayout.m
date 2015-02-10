@@ -85,7 +85,7 @@
         FFXCollectionViewMasonryLayoutLogic * layoutLogic =[[FFXCollectionViewMasonryLayoutLogic alloc]init];
         NSInteger numberOfColumns = 3;
         layoutLogic.interItemSpacing = 10;
-        layoutLogic.padding = UIEdgeInsetsMake(0,0,0,0);
+        layoutLogic.padding = UIEdgeInsetsMake(30,30,30,30);
         layoutLogic.numberOfColums = numberOfColumns;
         layoutLogic.numberOfItems = [self.collectionView numberOfItemsInSection:section];
         layoutLogic.collectionViewFrame = self.collectionView.frame;
