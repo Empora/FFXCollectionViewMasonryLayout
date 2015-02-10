@@ -43,6 +43,7 @@
     cell.backgroundColor = [UIColor redColor];
     UILabel * textLabel = (UILabel*)[cell viewWithTag:1];
     [textLabel setText:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+    NSLog(@"%li",(long)indexPath.row);
     return cell;
 }
 
@@ -53,7 +54,7 @@
 
 // Returns Sections to display in CollectionView
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 2;
+    return 10;
 }
 
 #pragma mark - CustomCollectionViewDelegate

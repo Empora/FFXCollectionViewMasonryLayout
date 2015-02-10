@@ -61,7 +61,6 @@
 @interface FFXCollectionViewMasonryLayout()
 
 @property (nonatomic, strong) NSMutableArray        *layoutInfo;            // stores all relevant Information about the CollectionViewCell
-@property (nonatomic,strong)  NSMutableArray        *masterStack;
 @property (nonatomic, strong) NSMutableArray        *lastYValueForColumns;
 @end
 
