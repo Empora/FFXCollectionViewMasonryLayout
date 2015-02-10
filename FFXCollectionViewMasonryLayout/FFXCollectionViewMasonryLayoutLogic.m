@@ -32,7 +32,6 @@
     NSIndexPath * nextItem = nil;
     CGFloat stackedColumns = 0; // Replace by function that calculates how much costs we have to rescale
     BOOL beforeWasFullSpan = NO;
-    // Replace stackedColumns withFunctionsThat calculates how expensive it is to rescale every element
     while ((nextItem = [self getNextElement:!stackedColumns withMeasurementBlock:measureItemBlock])) {
         
         CGSize size = measureItemBlock(nextItem.row,CGRectZero);
