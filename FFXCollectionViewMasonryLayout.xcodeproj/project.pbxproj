@@ -17,6 +17,7 @@
 		AF537F131A84E01100AC9078 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF537F111A84E01100AC9078 /* ViewController.m */; };
 		AF537F161A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = AF537F151A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m */; };
 		AF537F171A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = AF537F151A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m */; };
+		AF8E503A1A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8E50391A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m */; };
 		AFA12FF51A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA12FF41A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m */; };
 		AFA12FF61A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA12FF41A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		AF537F111A84E01100AC9078 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		AF537F141A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFXCollectionViewMasonryLayout.h; sourceTree = "<group>"; };
 		AF537F151A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFXCollectionViewMasonryLayout.m; sourceTree = "<group>"; };
+		AF8E50391A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFXCollectionViewMasonryLayoutLogicTests.m; sourceTree = "<group>"; };
 		AFA12FF31A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFXCollectionViewMasonryLayoutLogic.h; sourceTree = "<group>"; };
 		AFA12FF41A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFXCollectionViewMasonryLayoutLogic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				AF537F061A84DFD100AC9078 /* FFXCollectionViewMasonryLayoutTests.m */,
+				AF8E50391A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m */,
 				AF537F041A84DFD100AC9078 /* Supporting Files */,
 			);
 			path = FFXCollectionViewMasonryLayoutTests;
@@ -248,6 +251,7 @@
 				AF537F171A84E02D00AC9078 /* FFXCollectionViewMasonryLayout.m in Sources */,
 				AF537F131A84E01100AC9078 /* ViewController.m in Sources */,
 				AF537F071A84DFD100AC9078 /* FFXCollectionViewMasonryLayoutTests.m in Sources */,
+				AF8E503A1A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

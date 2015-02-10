@@ -1,19 +1,19 @@
 //
-//  FFXCollectionViewMasonryLayoutTests.m
-//  FFXCollectionViewMasonryLayoutTests
+//  FFXCollectionViewMasonryLayoutLogicTests.m
+//  FFXCollectionViewMasonryLayout
 //
-//  Created by Sebastian Boldt on 06.02.15.
+//  Created by Sebastian Boldt on 10.02.15.
 //  Copyright (c) 2015 Empora. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "FFXCollectionViewMasonryLayout.h"
-@interface FFXCollectionViewMasonryLayoutTests : XCTestCase
+
+@interface FFXCollectionViewMasonryLayoutLogicTests : XCTestCase
 
 @end
 
-@implementation FFXCollectionViewMasonryLayoutTests
+@implementation FFXCollectionViewMasonryLayoutLogicTests
 
 - (void)setUp {
     [super setUp];
@@ -25,17 +25,16 @@
     [super tearDown];
 }
 
-- (void)testPerformanceOfPrepareLayout {
+- (void)testExample {
+    // This is an example of a functional test case.
+    XCTAssert(YES, @"Pass");
+}
+
+- (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
-}
-
-- (void) testUICollectionViewDataSource
-{
-    // Cells should not be nil
-    //XCTAssertNotNil(cell, @"Cell should not be nil");
 }
 
 @end
