@@ -111,9 +111,11 @@
     UICollectionViewLayoutAttributes * itemAttributes=
     [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:item];
     CGSize size = measurementBlock(item.row,CGRectZero);
-    CGFloat x = self.interItemSpacing;
+    CGFloat x =  self.padding.left;
     CGFloat y = [self highestValueOfAllLastColumns];
-    itemAttributes.frame = CGRectMake(x, y,self.collectionViewFrame.size.width-self.interItemSpacing*2, size.height); // Aspect Ration stuff has to go here
+    CGFloat width = self.collectionViewFrame.size.width-self.padding.right-self.padding.left;
+    CGFloat height = size.height *(width/size.width);
+    itemAttributes.frame = CGRectMake(x, y,width,height); // Aspect Ratio stuff has to go here
     itemAttributes.alpha = 0.5;
     y+= size.height;
     y+= self.interItemSpacing;
@@ -125,13 +127,20 @@
 -(void)appendElement:(NSIndexPath*)item withMeasurementBlock:(FFXMeasureItemBlock)measurementBlock {
     UICollectionViewLayoutAttributes * itemAttributes=
     [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:item];
-    CGFloat itemWidth = [self getItemWidth];
     NSInteger columnWidthLowestYValue = [self getLastColumnWitLowestYValue];
-    CGFloat x = self.interItemSpacing + (self.interItemSpacing + itemWidth) * columnWidthLowestYValue;
+    // Calculating x-position
+    CGFloat x = 0;
+    if (columnWidthLowestYValue == 0) { // If item is first
+        x = self.padding.left;
+    } else if(columnWidthLowestYValue == self.numberOfColums) { // if element is on the right
+        x = (self.interItemSpacing*columnWidthLowestYValue-1) + (columnWidthLowestYValue*[self getItemWidth]);
+    } else { // if is in the middle
+        x = self.padding.left +((columnWidthLowestYValue)*self.interItemSpacing)+((columnWidthLowestYValue)*[self getItemWidth]);
+    }
     CGFloat y = [[self.lastYValueForColumns objectAtIndex:columnWidthLowestYValue]floatValue];
-    //CGFloat height = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:item].height;
     CGFloat height = measurementBlock(item.row,CGRectZero).height;
-    itemAttributes.frame = CGRectMake(x, y, itemWidth, height);
+    CGFloat width = [self getItemWidth];
+    itemAttributes.frame = CGRectMake(x, y, width, height);
     y+= height;
     y+= self.interItemSpacing;
     [self.lastYValueForColumns replaceObjectAtIndex:columnWidthLowestYValue withObject:@(y)];
@@ -142,7 +151,7 @@
 
 -(CGFloat)getItemWidth {
     CGFloat fullWidth = self.collectionViewFrame.size.width;
-    CGFloat availableSpaceExcludingPadding = fullWidth - (self.interItemSpacing * (self.numberOfColums + 1));
+    CGFloat availableSpaceExcludingPadding = fullWidth - (self.padding.left + self.padding.right);
     return (availableSpaceExcludingPadding / self.numberOfColums);
 }
 

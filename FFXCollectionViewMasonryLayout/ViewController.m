@@ -40,7 +40,10 @@
     static NSString *CellIdentifier = @"cell";
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier
                                                                            forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
+    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+    cell.backgroundColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
     UILabel * textLabel = (UILabel*)[cell viewWithTag:1];
     [textLabel setText:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
     NSLog(@"%li",(long)indexPath.row);
