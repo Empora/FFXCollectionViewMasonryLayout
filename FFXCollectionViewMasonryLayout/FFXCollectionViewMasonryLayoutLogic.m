@@ -17,6 +17,7 @@
  row: @(3) --> @[IndexPath1,IndexPath2 ......, IndexPathN] */
 @property (nonatomic,strong) NSMutableDictionary * allElementsAfterFullspan;
 @property (nonatomic,assign) BOOL firstRow;
+@property (nonatomic,assign) CGFloat itemWidth;
 @end
 @implementation FFXCollectionViewMasonryLayoutLogic
 
@@ -27,6 +28,7 @@
     self.layoutInfo = [NSMutableDictionary dictionary];
     [self prepareAllElementsAfterFullSpan];
     [self prepareMasterStackForSection:self.numberOfItems];
+    self.itemWidth = [self getWidthOfItem];
 }
 -(NSDictionary*)computeLayoutWithmeasureItemBlock:(FFXMeasureItemBlock)measureItemBlock {
     
@@ -36,7 +38,7 @@
     BOOL beforeWasFullSpan = NO;
     while ((nextItem = [self getNextElement:!stackedColumns withMeasurementBlock:measureItemBlock])) {
         
-        CGSize size = measureItemBlock(nextItem.row,CGRectZero);
+        CGSize size = measureItemBlock(nextItem.row,CGRectMake(0, 0, self.itemWidth, 0));
         BOOL isCurrentElementFullspan = [self checkIfElementIsFullSpan:size];
         // If current Element is a fullSpan Element
         if (isCurrentElementFullspan) {
@@ -90,7 +92,7 @@
             tempIndexPath = [self.masterStack objectAtIndex:0];
             [self.masterStack removeObjectAtIndex:0];
             
-            CGSize size = measurementBlock(tempIndexPath.row,CGRectZero);
+            CGSize size = measurementBlock(tempIndexPath.row,CGRectMake(0, 0, self.itemWidth, 0));
             BOOL isCurrentElementFullspan = [self checkIfElementIsFullSpan:size];
             if (isCurrentElementFullspan) {
                 [self.fullSpanStack addObject:tempIndexPath];
@@ -117,14 +119,13 @@
     }
     UICollectionViewLayoutAttributes * itemAttributes=
     [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:item];
-    CGSize size = measurementBlock(item.row,CGRectZero);
+    CGSize size = measurementBlock(item.row,CGRectMake(0, 0, self.itemWidth, 0));
     CGFloat x =  self.padding.left;
     CGFloat y = [self highestValueOfAllLastColumns];
     if (self.firstRow) {
         y+= self.padding.top;
     }
     CGFloat width = self.collectionViewFrame.size.width-self.padding.right-self.padding.left;
-    //CGFloat height = size.height *(width/size.width);
     itemAttributes.frame = CGRectMake(x, y,width,size.height); // Aspect Ratio stuff has to go here
     itemAttributes.alpha = 0.5;
     y+= size.height;
@@ -143,16 +144,19 @@
     if (columnWidthLowestYValue == 0) { // If item is first
         x = self.padding.left;
     } else if(columnWidthLowestYValue == self.numberOfColums) { // if element is on the right
-        x = (self.interItemSpacing*columnWidthLowestYValue-1) + (columnWidthLowestYValue*[self getItemWidth]);
+        x = (self.interItemSpacing*columnWidthLowestYValue-1) + (columnWidthLowestYValue*self.itemWidth);
     } else { // if is in the middle
-        x = self.padding.left +((columnWidthLowestYValue)*self.interItemSpacing)+((columnWidthLowestYValue)*[self getItemWidth]);
+        x = self.padding.left +((columnWidthLowestYValue)*self.interItemSpacing)+((columnWidthLowestYValue)*self.itemWidth);
     }
     CGFloat y = [[self.lastYValueForColumns objectAtIndex:columnWidthLowestYValue]floatValue];
     if (self.firstRow) {
         y+= self.padding.top;
     }
-    CGFloat height = measurementBlock(item.row,CGRectZero).height;
-    CGFloat width = [self getItemWidth];
+    
+    // Calulating new height
+    CGSize requestedSize = measurementBlock(item.row,CGRectMake(0, 0, self.itemWidth, 0));
+    CGFloat width = self.itemWidth;
+    CGFloat height = requestedSize.height;
     itemAttributes.frame = CGRectMake(x, y, width, height);
     y+= height;
     y+= self.interItemSpacing;
@@ -162,7 +166,7 @@
     [allElementsAfterFullSpanTemp addObject:item];
 }
 
--(CGFloat)getItemWidth {
+-(CGFloat)getWidthOfItem {
     CGFloat fullWidth = self.collectionViewFrame.size.width;
     CGFloat availableSpaceExcludingPadding = fullWidth - (self.padding.left + self.padding.right) - ((self.numberOfColums-1)*self.interItemSpacing);
     return (availableSpaceExcludingPadding / self.numberOfColums);
@@ -232,7 +236,7 @@
 // When should a element become fullspan ?
 -(BOOL)checkIfElementIsFullSpan:(CGSize)size {
     // Here we have to define some rules for when a element becomes a full span element
-    if (size.width > self.collectionViewFrame.size.width-100) {
+    if (size.width > self.itemWidth) {
         return YES;
     } else {
         return NO;

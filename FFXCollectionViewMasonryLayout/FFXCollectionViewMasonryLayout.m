@@ -83,7 +83,7 @@
     for(NSInteger section = 0; section < numSections; section++)  {
         
         FFXCollectionViewMasonryLayoutLogic * layoutLogic =[[FFXCollectionViewMasonryLayoutLogic alloc]init];
-        NSInteger numberOfColumns = 4;
+        NSInteger numberOfColumns = 2;
         layoutLogic.interItemSpacing = 5;
         layoutLogic.padding = UIEdgeInsetsMake(8,8,8,8); // top,left, bottom, right
         layoutLogic.numberOfColums = numberOfColumns;
