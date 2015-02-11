@@ -88,9 +88,9 @@
         layoutLogic.padding = UIEdgeInsetsMake(8,8,8,8); // top,left, bottom, right
         layoutLogic.numberOfColums = numberOfColumns;
         layoutLogic.numberOfItems = [self.collectionView numberOfItemsInSection:section];
-        layoutLogic.collectionViewFrame = self.collectionView.frame;
+        layoutLogic.collectionViewFrame = CGRectMake(0, 0, self.collectionView.frame.size.width,0);
         if(!self.lastYValueForColumns) {
-            [self prepareLastYValueArrayForNumberOfColumns:numberOfColumns];
+            [self prepareLastYValueArrayForNumberOfColumns:numberOfColumns withValue:@(100)];
         }
         layoutLogic.lastYValueForColumns = self.lastYValueForColumns;
 
@@ -104,10 +104,10 @@
 }
 
 // creates an Array with same dimensions as number of columns and initalizes its values with 0 (start point)
--(void)prepareLastYValueArrayForNumberOfColumns:(NSInteger)numberOfColums {
+-(void)prepareLastYValueArrayForNumberOfColumns:(NSInteger)numberOfColums withValue:(NSNumber*)value {
     NSMutableArray *array = [[NSMutableArray alloc]init];
     for (int i = 0; i< numberOfColums; i++) {
-        [array addObject:@(0)];
+        [array addObject:value];
     }
     self.lastYValueForColumns =  array;
 }
