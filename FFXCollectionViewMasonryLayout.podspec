@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/Empora/FFXCollectionViewMasonryLayout.git", :commit => "da5a592d8d0c183535e14948455191785ed003a9" , :tag => '1.0.0'}
+  s.source       = { :git => "https://github.com/Empora/FFXCollectionViewMasonryLayout.git",:tag => s.version.to_s}
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
