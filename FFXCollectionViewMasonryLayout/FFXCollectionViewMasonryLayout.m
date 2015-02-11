@@ -83,9 +83,9 @@
     for(NSInteger section = 0; section < numSections; section++)  {
         
         FFXCollectionViewMasonryLayoutLogic * layoutLogic =[[FFXCollectionViewMasonryLayoutLogic alloc]init];
-        NSInteger numberOfColumns = 3;
-        layoutLogic.interItemSpacing = 10;
-        layoutLogic.padding = UIEdgeInsetsMake(30,30,30,30);
+        NSInteger numberOfColumns = 4;
+        layoutLogic.interItemSpacing = 5;
+        layoutLogic.padding = UIEdgeInsetsMake(8,8,8,8); // top,left, bottom, right
         layoutLogic.numberOfColums = numberOfColumns;
         layoutLogic.numberOfItems = [self.collectionView numberOfItemsInSection:section];
         layoutLogic.collectionViewFrame = self.collectionView.frame;

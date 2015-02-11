@@ -41,6 +41,7 @@
         // If current Element is a fullSpan Element
         if (isCurrentElementFullspan) {
             [self appendFullSpanElement:nextItem beforeWasFullSpan:beforeWasFullSpan withMeasurmentBlock:measureItemBlock];
+            self.firstRow = NO;
             stackedColumns = 0; // Column count wieder auf 0 setzen
             beforeWasFullSpan = YES;
         }
