@@ -98,7 +98,6 @@
             CGSize itemSize = [self.delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:section]];
             return itemSize;
         }];
-        
         [self.layoutInfo addObjectsFromArray:[layoutAttributes allValues]];
     }
 }

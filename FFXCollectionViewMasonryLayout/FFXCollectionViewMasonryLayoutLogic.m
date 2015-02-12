@@ -7,6 +7,7 @@
 //
 
 #import "FFXCollectionViewMasonryLayoutLogic.h"
+#import "FFXCollectionViewLayoutAttributesMasonry.h"
 @interface FFXCollectionViewMasonryLayoutLogic()
 @property (nonatomic, strong) NSMutableDictionary   *layoutInfo;            // stores all relevant Information about the CollectionViewCell
 @property (nonatomic, strong) NSMutableArray        *fullSpanStack;         // holds all fullspan Elements that didnt fit inside the collectionView
@@ -117,8 +118,7 @@
     if (!beforeWasFullSpan) {
         [self recalculateHeightOfAllElementsAfterFullspan:self.allElementsAfterFullspan];
     }
-    UICollectionViewLayoutAttributes * itemAttributes=
-    [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:item];
+    FFXCollectionViewLayoutAttributesMasonry * itemAttributes= [FFXCollectionViewLayoutAttributesMasonry layoutAttributesForCellWithIndexPath:item];
     CGSize size = measurementBlock(item.row,CGRectMake(0, 0, self.itemWidth, 0));
     CGFloat x =  self.padding.left;
     CGFloat y = [self highestValueOfAllLastColumns];
@@ -128,6 +128,7 @@
     CGFloat width = self.collectionViewFrame.size.width-self.padding.right-self.padding.left;
     itemAttributes.frame = CGRectMake(x, y,width,size.height); // Aspect Ratio stuff has to go here
     itemAttributes.alpha = 0.5;
+    itemAttributes.columnIndex = 0;
     y+= size.height;
     y+= self.interItemSpacing;
     self.layoutInfo[item] = itemAttributes;
@@ -136,8 +137,7 @@
 }
 
 -(void)appendElement:(NSIndexPath*)item withMeasurementBlock:(FFXMeasureItemBlock)measurementBlock {
-    UICollectionViewLayoutAttributes * itemAttributes=
-    [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:item];
+    FFXCollectionViewLayoutAttributesMasonry * itemAttributes= [FFXCollectionViewLayoutAttributesMasonry layoutAttributesForCellWithIndexPath:item];
     NSInteger columnWidthLowestYValue = [self getLastColumnWitLowestYValue];
     // Calculating x-position
     CGFloat x = 0;
@@ -158,6 +158,7 @@
     CGFloat width = self.itemWidth;
     CGFloat height = requestedSize.height;
     itemAttributes.frame = CGRectMake(x, y, width, height);
+    itemAttributes.columnIndex = columnWidthLowestYValue;
     y+= height;
     y+= self.interItemSpacing;
     [self.lastYValueForColumns replaceObjectAtIndex:columnWidthLowestYValue withObject:@(y)];
