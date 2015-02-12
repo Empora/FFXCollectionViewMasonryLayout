@@ -89,7 +89,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-s.source_files  = "FFXCollectionViewMasonryLayout/FFXCollectionViewMasonryLayout.{h,m}","FFXCollectionViewMasonryLayout/FFXCollectionViewMasonryLayoutLogic.{h,m}","FFXCollectionViewMasonryLayout/FFXCollectionViewLayoutAttributesMasonry.{h,m}"
+s.source_files  = "FFXCollectionViewLayoutAttributesMasonry.{h,m}","FFXCollectionViewMasonryLayout/FFXCollectionViewMasonryLayout.{h,m}","FFXCollectionViewMasonryLayout/FFXCollectionViewMasonryLayoutLogic.{h,m}"
 
   # s.public_header_files = "Classes/**/*.h"
 
