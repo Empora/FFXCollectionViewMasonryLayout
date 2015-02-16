@@ -54,6 +54,20 @@
     XCTAssertTrue(self.logicToTest.numberOfItems == layoutAttributes.count, @"number of layout attributes should be equal to all number of items passed to layoutLogic");
 }
 
+#pragma mark - Padding Tests
+-(void)testThatLeftPaddingHasCorrectValue {
+    XCTAssertTrue(self.logicToTest.padding.left == PADDING,@"left padding should be set to correct value");
+}
+-(void)testThatRightPaddingHasCorrectValue {
+    XCTAssertTrue(self.logicToTest.padding.right == PADDING,@"right padding should be set to correct value");
+}
+-(void)testThatBottomPaddingHasCorrectValue {
+    XCTAssertTrue(self.logicToTest.padding.bottom == PADDING,@"bottom padding should be set to correct value");
+}
+-(void)testThatTopPaddingHasCorrectValue {
+    XCTAssertTrue(self.logicToTest.padding.top == PADDING,@"top padding should be set");
+}
+
 -(void)testThatLeftPaddingWorksCorrectly {
     self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
@@ -78,7 +92,20 @@
         UICollectionViewLayoutAttributes * attributes = [layoutAttributes objectForKey:[NSIndexPath indexPathForItem:i inSection:0]];
         CGFloat sizeOfCollectionViewExcludingPadding = (COLLECTIONVIEW_WIDTH - self.logicToTest.padding.right);
         CGFloat lastXPositionOfItem = (attributes.frame.origin.x+attributes.frame.size.width);
-        XCTAssertTrue(lastXPositionOfItem <= sizeOfCollectionViewExcludingPadding,@"left padding should be correctly applied to all layout Attributes");
+        XCTAssertTrue(lastXPositionOfItem <= sizeOfCollectionViewExcludingPadding,@"right padding should be correctly applied to all layout Attributes");
+    }
+}
+
+-(void)testThatTopPaddingWorksCorrectly {
+    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
+    NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
+        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        return itemSize;
+    }];
+    
+    for (int i = 0 ; i<self.logicToTest.numberOfItems; i++) {
+        UICollectionViewLayoutAttributes * attributes = [layoutAttributes objectForKey:[NSIndexPath indexPathForItem:i inSection:0]];
+        XCTAssertTrue(attributes.frame.origin.y >= PADDING,@"top padding should be correctly applied to all layout Attributes");
     }
 }
 
@@ -86,21 +113,6 @@
 -(void)testThatIterItemSpacingHasCorrectValue {
     XCTAssertTrue(self.logicToTest.interItemSpacing == 5,@"Interitemspacing should be set");
 }
-
-#pragma mark - Padding Tests
--(void)testThatLeftPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.left == PADDING,@"left padding should be set to correct value");
-}
--(void)testThatRightPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.right == PADDING,@"right padding should be set to correct value");
-}
--(void)testThatBottomPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.bottom == PADDING,@"bottom padding should be set to correct value");
-}
--(void)testThatTopPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.top == PADDING,@"top padding should be set");
-}
-
 
 #pragma mark -- Delegate Mocking Functions
 
