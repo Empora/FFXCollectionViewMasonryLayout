@@ -76,12 +76,6 @@
     }
 }
 
-// Test Data stuff
--(NSNumber *)randomNumberFromRangeMax:(NSInteger)aMax Min:(NSInteger)aMin
-{
-    return [NSNumber numberWithInt:(int)(rand() % (aMax - aMin + 1) + aMin)];
-}
-
 // Creates some Testdata A stands for
 -(void)setupTestModel {
     self.testModel = [[NSMutableArray alloc]init];

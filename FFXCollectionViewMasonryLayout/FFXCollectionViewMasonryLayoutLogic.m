@@ -28,7 +28,7 @@
     self.fullSpanStack = [[NSMutableArray alloc]init];
     self.layoutInfo = [NSMutableDictionary dictionary];
     [self prepareAllElementsAfterFullSpan];
-    [self prepareMasterStackForSection:self.numberOfItems];
+    self.masterStack = [self prepareMasterStackForSection:self.numberOfItems];
     self.itemWidth = [self getWidthOfItem];
 }
 -(NSDictionary*)computeLayoutWithmeasureItemBlock:(FFXMeasureItemBlock)measureItemBlock {
@@ -63,12 +63,12 @@
 }
 
 //Creates a Master Stack of all IndexPathes
--(void)prepareMasterStackForSection:(NSInteger)numberOfItems {
-    self.masterStack = [[NSMutableArray alloc]init];
+-(NSMutableArray*)prepareMasterStackForSection:(NSInteger)numberOfItems {
+    NSMutableArray * array = [[NSMutableArray alloc]init];
     for(NSInteger item = 0; item < numberOfItems;item++){
-        [self.masterStack insertObject:[NSIndexPath indexPathForItem:item inSection:0] atIndex:self.masterStack.count];
+        [array insertObject:[NSIndexPath indexPathForItem:item inSection:0] atIndex:self.masterStack.count];
     }
-    
+    return array;
 }
 
 // Returns next fullspan or single span element

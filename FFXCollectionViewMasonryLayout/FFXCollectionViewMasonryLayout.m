@@ -90,7 +90,7 @@
         layoutLogic.numberOfItems = [self.collectionView numberOfItemsInSection:section];
         layoutLogic.collectionViewFrame = CGRectMake(0, 0, self.collectionView.frame.size.width,0);
         if(!self.lastYValueForColumns) {
-            [self prepareLastYValueArrayForNumberOfColumns:numberOfColumns withValue:@(100)];
+            self.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:numberOfColumns withValue:@(100)];
         }
         layoutLogic.lastYValueForColumns = self.lastYValueForColumns;
 
@@ -103,12 +103,12 @@
 }
 
 // creates an Array with same dimensions as number of columns and initalizes its values with 0 (start point)
--(void)prepareLastYValueArrayForNumberOfColumns:(NSInteger)numberOfColums withValue:(NSNumber*)value {
+-(NSMutableArray*)prepareLastYValueArrayForNumberOfColumns:(NSInteger)numberOfColums withValue:(NSNumber*)value {
     NSMutableArray *array = [[NSMutableArray alloc]init];
     for (int i = 0; i< numberOfColums; i++) {
         [array addObject:value];
     }
-    self.lastYValueForColumns =  array;
+    return array;
 }
 
 
@@ -133,7 +133,7 @@
     return allAttributes;
 }
 
-// Returns the Contentsize for the Whole CollectionView
+// Returns the Contentsize for the whole CollectionView
 // Berechne die Höhe des CollectionViews
 // Nutzt für die höhen Berechnung den zuletzt gespiecherten Y-Wert
 -(CGFloat)highestValueOfAllLastColumns{
