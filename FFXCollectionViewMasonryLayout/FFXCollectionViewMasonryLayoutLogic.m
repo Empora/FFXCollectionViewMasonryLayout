@@ -66,7 +66,7 @@
 -(NSMutableArray*)prepareMasterStackForSection:(NSInteger)numberOfItems {
     NSMutableArray * array = [[NSMutableArray alloc]init];
     for(NSInteger item = 0; item < numberOfItems;item++){
-        [array insertObject:[NSIndexPath indexPathForItem:item inSection:0] atIndex:self.masterStack.count];
+        [array addObject:[NSIndexPath indexPathForItem:item inSection:0]];
     }
     return array;
 }
