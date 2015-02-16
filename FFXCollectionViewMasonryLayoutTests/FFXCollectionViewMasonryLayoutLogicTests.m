@@ -10,13 +10,10 @@
 #import <XCTest/XCTest.h>
 #import "FFXCollectionViewMasonryLayoutLogic.h"
 #import "FFXCollectionViewMasonryLayout.h"
+#import "FFXCollectionViewMasonryLayoutLogic_Internal.h"
 
 #define COLLECTIONVIEW_WIDTH 375
 #define PADDING 8
-@interface FFXCollectionViewMasonryLayoutLogic (showPrivateMethods)
--(void)prepareMasterStackForSection:(NSInteger)numberOfItems;
-@end
-
 @interface FFXCollectionViewMasonryLayoutLogicTests : XCTestCase
 @property(nonatomic,strong) FFXCollectionViewMasonryLayoutLogic * logicToTest;
 @property (nonatomic,strong) NSMutableArray * testModel;
@@ -112,6 +109,14 @@
 #pragma mark - Interitemspacing Tests
 -(void)testThatIterItemSpacingHasCorrectValue {
     XCTAssertTrue(self.logicToTest.interItemSpacing == 5,@"Interitemspacing should be set");
+}
+
+#pragma mark - private method testing 
+
+-(void)testThatMasterStackGetCorrectlyConfigured {
+    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
+    NSMutableArray * masterStack = [self.logicToTest prepareMasterStackForSection:100];
+    XCTAssertTrue(masterStack.count == 100,@"masterstack should have same size as number of items");
 }
 
 #pragma mark -- Delegate Mocking Functions
