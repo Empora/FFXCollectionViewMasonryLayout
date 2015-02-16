@@ -111,16 +111,6 @@
     return array;
 }
 
-
-
--(BOOL)collectionViewLayoutShouldRescaleElements:(NSMutableArray*)elements withLastYValues:(NSMutableArray*)lastYValuesForAllColumns{
-    /* Getting percentage of how much content of each row is affected when rescaling
-     depending on this percentage we should decide to rescale
-     The Problem here is that we maybe destroy the order of that element
-     and we also need to know if there is an empty element */
-     return YES;
-}
-
 #pragma mark - Functions to override (UICollectionViewLayout)
 // Returns Layoutattributes for Elements in a specific rect
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{

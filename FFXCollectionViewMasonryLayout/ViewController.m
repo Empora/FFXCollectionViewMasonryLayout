@@ -71,7 +71,7 @@
        return temp;
     } else {
         // Random string
-        CGSize temp = CGSizeMake(30, 200 + (arc4random() % 100));
+        CGSize temp = CGSizeMake(30, 50 + (arc4random() % 200));
         return temp;
     }
 }

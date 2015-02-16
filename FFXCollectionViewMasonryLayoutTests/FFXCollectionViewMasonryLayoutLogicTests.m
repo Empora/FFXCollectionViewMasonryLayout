@@ -24,13 +24,13 @@
 
 - (void)setUp {
     [super setUp];
-    [self setupTestModel];
+    [self setupTestModelWithNumberOfItems:1000];
     self.logicToTest = [[FFXCollectionViewMasonryLayoutLogic alloc]init];
+    self.logicToTest.numberOfItems = 1000;
     self.logicToTest.interItemSpacing = 5;
     self.logicToTest.padding = UIEdgeInsetsMake(PADDING,PADDING,PADDING,PADDING); // top,left, bottom, right
     self.logicToTest.numberOfColums = 2;
     self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
-    self.logicToTest.numberOfItems = 20;
     self.logicToTest.collectionViewFrame = CGRectMake(0, 0, 367,0);
 }
 
@@ -41,6 +41,19 @@
 
 -(void)testThatLogicExists {
     XCTAssertNotNil(self.logicToTest,@"should be able to create a logic Instance");
+}
+
+- (void) testComputeFunctionPerformance {
+    // Testing with one Million items
+    [self setupTestModelWithNumberOfItems:10000];
+    self.logicToTest.numberOfItems = 10000;
+    __block NSDictionary * layoutAttributes = nil;
+    [self measureBlock:^{
+        layoutAttributes= [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
+            CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+            return itemSize;
+        }];
+    }];
 }
 
 -(void)testThatNumberOfLayoutAttributesIsCorrect {
@@ -153,6 +166,7 @@
     BOOL fullspan = [self.logicToTest checkIfElementIsFullSpan:CGSizeMake(([self.logicToTest getWidthOfItem]-1),200)];
     XCTAssert(fullspan,@"item should not be fullspan");
 }
+
 #pragma mark -- Delegate Mocking Functions
 
 // returning random Size for each item
@@ -172,10 +186,10 @@
 }
 
 // Creates some Testdata A  equals fullspan, b equals random sized element
--(void)setupTestModel {
+-(void)setupTestModelWithNumberOfItems:(NSUInteger)numberOfItems {
     self.testModel = [[NSMutableArray alloc]init];
     //Create some TestData
-    for (int i = 0 ; i <100; i++) {
+    for (int i = 0 ; i <numberOfItems; i++) {
         int r = arc4random() % 5; // 5 different Kinds of Elements
         if (r == 1) {
             [self.testModel addObject:@"A"]; // A is Fullspan
