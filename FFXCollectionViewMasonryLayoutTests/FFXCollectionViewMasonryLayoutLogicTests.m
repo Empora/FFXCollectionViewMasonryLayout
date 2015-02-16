@@ -29,6 +29,7 @@
     self.logicToTest.interItemSpacing = 5;
     self.logicToTest.padding = UIEdgeInsetsMake(PADDING,PADDING,PADDING,PADDING); // top,left, bottom, right
     self.logicToTest.numberOfColums = 2;
+    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
     self.logicToTest.numberOfItems = 20;
     self.logicToTest.collectionViewFrame = CGRectMake(0, 0, 367,0);
 }
@@ -43,7 +44,6 @@
 }
 
 -(void)testThatNumberOfLayoutAttributesIsCorrect {
-    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfItems withValue:@(0)];
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
         CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
@@ -66,7 +66,6 @@
 }
 
 -(void)testThatLeftPaddingWorksCorrectly {
-    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
         CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
@@ -79,7 +78,6 @@
 }
 
 -(void)testThatRightPaddingWorksCorrectly {
-    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
         CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
@@ -94,7 +92,6 @@
 }
 
 -(void)testThatTopPaddingWorksCorrectly {
-    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
         CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
@@ -114,11 +111,48 @@
 #pragma mark - private method testing 
 
 -(void)testThatMasterStackGetCorrectlyConfigured {
-    self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
     NSMutableArray * masterStack = [self.logicToTest prepareMasterStackForSection:100];
     XCTAssertTrue(masterStack.count == 100,@"masterstack should have same size as number of items");
 }
 
+-(void)testThatMasterStackIsEmptyAfterComputing {
+    [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
+        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        return itemSize;
+    }];
+    
+    XCTAssert(self.logicToTest.masterStack.count == 0,@"masterStack should be empty after computing all layout attributes");
+}
+
+-(void)testThatFullspanStackIsEmptyAfterComputing {
+    [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
+        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        return itemSize;
+    }];
+    
+    XCTAssert(self.logicToTest.masterStack.count == 0,@"masterStack should be empty after computing all layout attributes");
+}
+
+-(void)testThatItemWidthIsCorrectlyCalculated {
+    [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
+        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        return itemSize;
+    }];
+    CGFloat widthOfItem = [self.logicToTest getWidthOfItem];
+    CGFloat fullWidth = self.logicToTest.collectionViewFrame.size.width;
+    CGFloat availableSpaceExcludingPadding = fullWidth - (self.logicToTest.padding.right + self.logicToTest.padding.left) - ((self.logicToTest.numberOfColums-1)*self.logicToTest.interItemSpacing);
+    XCTAssert(widthOfItem == (availableSpaceExcludingPadding / self.logicToTest.numberOfColums), @"width of item should be correctly sized");
+}
+
+-(void)testThatFullSpanElementIsDetectedCorrectly {
+    BOOL fullspan = [self.logicToTest checkIfElementIsFullSpan:CGSizeMake(([self.logicToTest getWidthOfItem]+1),200)];
+    XCTAssert(fullspan,@"item should be fullspan");
+}
+
+-(void)testThatNoFullSpanElementIsDetectedCorrectly {
+    BOOL fullspan = [self.logicToTest checkIfElementIsFullSpan:CGSizeMake(([self.logicToTest getWidthOfItem]-1),200)];
+    XCTAssert(fullspan,@"item should not be fullspan");
+}
 #pragma mark -- Delegate Mocking Functions
 
 // returning random Size for each item

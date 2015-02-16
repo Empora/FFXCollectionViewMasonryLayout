@@ -25,4 +25,7 @@
 -(BOOL)checkIfElementIsFullSpan:(CGSize)size;
 -(void)prepareLastYValueArray;
 -(void)prepareAllElementsAfterFullSpan;
+
+@property (nonatomic, strong) NSMutableArray *fullSpanStack;
+@property (nonatomic,strong)  NSMutableArray * masterStack;
 @end
