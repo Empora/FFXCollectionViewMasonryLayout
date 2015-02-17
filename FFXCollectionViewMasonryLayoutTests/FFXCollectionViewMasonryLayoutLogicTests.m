@@ -50,7 +50,7 @@
     __block NSDictionary * layoutAttributes = nil;
     [self measureBlock:^{
         layoutAttributes= [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-            CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+            CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
             return itemSize;
         }];
     }];
@@ -58,7 +58,7 @@
 
 -(void)testThatNumberOfLayoutAttributesIsCorrect {
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
     }];
     XCTAssertTrue(self.logicToTest.numberOfItems == layoutAttributes.count, @"number of layout attributes should be equal to all number of items passed to layoutLogic");
@@ -80,7 +80,7 @@
 
 -(void)testThatLeftPaddingWorksCorrectly {
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
     }];
     
@@ -92,7 +92,7 @@
 
 -(void)testThatRightPaddingWorksCorrectly {
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
     }];
     
@@ -106,13 +106,25 @@
 
 -(void)testThatTopPaddingWorksCorrectly {
     NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
     }];
     
     for (int i = 0 ; i<self.logicToTest.numberOfItems; i++) {
         UICollectionViewLayoutAttributes * attributes = [layoutAttributes objectForKey:[NSIndexPath indexPathForItem:i inSection:0]];
         XCTAssertTrue(attributes.frame.origin.y >= PADDING,@"top padding should be correctly applied to all layout Attributes");
+    }
+}
+
+-(void)testThatBottomPaddingWorksCorrectly {
+    NSDictionary * layoutAttributes = [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        return itemSize;
+    }];
+    
+    for (int i = 0 ; i<self.logicToTest.numberOfItems; i++) {
+        UICollectionViewLayoutAttributes * attributes = [layoutAttributes objectForKey:[NSIndexPath indexPathForItem:i inSection:0]];
+        XCTAssertTrue(attributes.frame.origin.y+attributes.frame.size.height >= PADDING,@"bottom padding should be correctly applied to all layout Attributes");
     }
 }
 
@@ -130,7 +142,7 @@
 
 -(void)testThatMasterStackIsEmptyAfterComputing {
     [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
     }];
     
@@ -139,7 +151,7 @@
 
 -(void)testThatFullspanStackIsEmptyAfterComputing {
     [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
     }];
     
@@ -148,7 +160,7 @@
 
 -(void)testThatItemWidthIsCorrectlyCalculated {
     [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self collectionView:nil layout:nil sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
+        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
         return itemSize;
     }];
     CGFloat widthOfItem = [self.logicToTest getWidthOfItem];
@@ -170,10 +182,7 @@
 #pragma mark -- Delegate Mocking Functions
 
 // returning random Size for each item
-- (CGSize)collectionView:(UICollectionView*) collectionView
-                   layout:(FFXCollectionViewMasonryLayout*) layout
-   sizeForItemAtIndexPath:(NSIndexPath*) indexPath {
-    // Creates random items for fullspan and normal items
+- (CGSize)getSizeForIndexPath:(NSIndexPath*)indexPath{
     NSString * string = [self.testModel objectAtIndex:indexPath.row];
     if ([string isEqualToString:@"A"]) { // fullspan
         CGSize temp = CGSizeMake(COLLECTIONVIEW_WIDTH, 200 + (arc4random() % 10));
