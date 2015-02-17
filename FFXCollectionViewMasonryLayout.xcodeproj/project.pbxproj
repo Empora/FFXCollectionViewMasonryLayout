@@ -22,6 +22,7 @@
 		AF8E503A1A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF8E50391A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m */; };
 		AFA12FF51A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA12FF41A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m */; };
 		AFA12FF61A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA12FF41A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m */; };
+		AFAF0D091A9337930018CBC0 /* FFXCollectionViewMasonryLayoutTest_Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = AFAF0D081A9337930018CBC0 /* FFXCollectionViewMasonryLayoutTest_Internal.m */; };
 		AFCD0DF11A8CB76F006A3FB9 /* FFXCollectionViewLayoutAttributesMasonry.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCD0DF01A8CB76F006A3FB9 /* FFXCollectionViewLayoutAttributesMasonry.m */; };
 		AFCD0DF21A8CB76F006A3FB9 /* FFXCollectionViewLayoutAttributesMasonry.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCD0DF01A8CB76F006A3FB9 /* FFXCollectionViewLayoutAttributesMasonry.m */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		AF8E50391A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFXCollectionViewMasonryLayoutLogicTests.m; sourceTree = "<group>"; };
 		AFA12FF31A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFXCollectionViewMasonryLayoutLogic.h; sourceTree = "<group>"; };
 		AFA12FF41A88D400000D2F36 /* FFXCollectionViewMasonryLayoutLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFXCollectionViewMasonryLayoutLogic.m; sourceTree = "<group>"; };
+		AFAF0D081A9337930018CBC0 /* FFXCollectionViewMasonryLayoutTest_Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFXCollectionViewMasonryLayoutTest_Internal.m; sourceTree = "<group>"; };
 		AFCD0DEF1A8CB76F006A3FB9 /* FFXCollectionViewLayoutAttributesMasonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFXCollectionViewLayoutAttributesMasonry.h; path = ../FFXCollectionViewLayoutAttributesMasonry.h; sourceTree = "<group>"; };
 		AFCD0DF01A8CB76F006A3FB9 /* FFXCollectionViewLayoutAttributesMasonry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFXCollectionViewLayoutAttributesMasonry.m; path = ../FFXCollectionViewLayoutAttributesMasonry.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +136,7 @@
 			children = (
 				AF537F061A84DFD100AC9078 /* FFXCollectionViewMasonryLayoutTests.m */,
 				AF8E50391A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m */,
+				AFAF0D081A9337930018CBC0 /* FFXCollectionViewMasonryLayoutTest_Internal.m */,
 				AF537F041A84DFD100AC9078 /* Supporting Files */,
 			);
 			path = FFXCollectionViewMasonryLayoutTests;
@@ -267,6 +270,7 @@
 				AF537F071A84DFD100AC9078 /* FFXCollectionViewMasonryLayoutTests.m in Sources */,
 				AFCD0DF21A8CB76F006A3FB9 /* FFXCollectionViewLayoutAttributesMasonry.m in Sources */,
 				AF8E503A1A89F5AE00266A18 /* FFXCollectionViewMasonryLayoutLogicTests.m in Sources */,
+				AFAF0D091A9337930018CBC0 /* FFXCollectionViewMasonryLayoutTest_Internal.m in Sources */,
 				AF6333541A920BD8008DF4CE /* FFXCollectionViewMasonryLayoutLogic_Internal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

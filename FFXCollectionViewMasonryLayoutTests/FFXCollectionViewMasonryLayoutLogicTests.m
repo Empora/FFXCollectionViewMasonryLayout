@@ -135,53 +135,6 @@
 -(void)testThatIterItemSpacingHasCorrectValue {
     XCTAssertTrue(self.logicToTest.interItemSpacing == 5,@"Interitemspacing should be set");
 }
-
-#pragma mark - private method testing 
-
--(void)testThatMasterStackGetCorrectlyConfigured {
-    NSMutableArray * masterStack = [self.logicToTest prepareMasterStackForSection:100];
-    XCTAssertTrue(masterStack.count == 100,@"masterstack should have same size as number of items");
-}
-
--(void)testThatMasterStackIsEmptyAfterComputing {
-    [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
-        return itemSize;
-    }];
-    
-    XCTAssert(self.logicToTest.masterStack.count == 0,@"masterStack should be empty after computing all layout attributes");
-}
-
--(void)testThatFullspanStackIsEmptyAfterComputing {
-    [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
-        return itemSize;
-    }];
-    
-    XCTAssert(self.logicToTest.masterStack.count == 0,@"masterStack should be empty after computing all layout attributes");
-}
-
--(void)testThatItemWidthIsCorrectlyCalculated {
-    [self.logicToTest computeLayoutWithmeasureItemBlock:^CGSize(NSInteger itemIndex,CGRect frame){
-        CGSize itemSize = [self getSizeForIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
-        return itemSize;
-    }];
-    CGFloat widthOfItem = [self.logicToTest getWidthOfItem];
-    CGFloat fullWidth = self.logicToTest.collectionViewFrame.size.width;
-    CGFloat availableSpaceExcludingPadding = fullWidth - (self.logicToTest.padding.right + self.logicToTest.padding.left) - ((self.logicToTest.numberOfColums-1)*self.logicToTest.interItemSpacing);
-    XCTAssert(widthOfItem == (availableSpaceExcludingPadding / self.logicToTest.numberOfColums), @"width of item should be correctly sized");
-}
-
--(void)testThatFullSpanElementIsDetectedCorrectly {
-    BOOL fullspan = [self.logicToTest checkIfElementIsFullSpan:CGSizeMake(([self.logicToTest getWidthOfItem]+1),200)];
-    XCTAssert(fullspan,@"item should be fullspan");
-}
-
--(void)testThatNoFullSpanElementIsDetectedCorrectly {
-    BOOL fullspan = [self.logicToTest checkIfElementIsFullSpan:CGSizeMake(([self.logicToTest getWidthOfItem]-1),200)];
-    XCTAssert(fullspan,@"item should not be fullspan");
-}
-
 #pragma mark -- Delegate Mocking Functions
 
 // returning random Size for each item
