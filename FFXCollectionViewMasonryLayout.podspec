@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "FFXCollectionViewMasonryLayout"
-  s.version      = "1.0.7"
+  s.version      = "1.0.8"
   s.summary      = "FFXCollectionViewMasonryLayout"
 
   s.description  = <<-DESC
