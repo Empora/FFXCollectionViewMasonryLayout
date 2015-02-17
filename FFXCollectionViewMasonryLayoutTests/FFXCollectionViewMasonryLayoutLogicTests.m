@@ -13,7 +13,10 @@
 #import "FFXCollectionViewMasonryLayoutLogic_Internal.h"
 
 #define COLLECTIONVIEW_WIDTH 375
-#define PADDING 8
+#define PADDING_LEFT 8
+#define PADDING_RIGHT 9
+#define PADDING_TOP 10
+#define PADDING_BOTTOM 11
 @interface FFXCollectionViewMasonryLayoutLogicTests : XCTestCase
 @property(nonatomic,strong) FFXCollectionViewMasonryLayoutLogic * logicToTest;
 @property (nonatomic,strong) NSMutableArray * testModel;
@@ -28,7 +31,7 @@
     self.logicToTest = [[FFXCollectionViewMasonryLayoutLogic alloc]init];
     self.logicToTest.numberOfItems = 1000;
     self.logicToTest.interItemSpacing = 5;
-    self.logicToTest.padding = UIEdgeInsetsMake(PADDING,PADDING,PADDING,PADDING); // top,left, bottom, right
+    self.logicToTest.padding = UIEdgeInsetsMake(PADDING_TOP,PADDING_LEFT,PADDING_BOTTOM,PADDING_RIGHT); // top,left, bottom, right
     self.logicToTest.numberOfColums = 2;
     self.logicToTest.lastYValueForColumns = [self prepareLastYValueArrayForNumberOfColumns:self.logicToTest.numberOfColums withValue:@(0)];
     self.logicToTest.collectionViewFrame = CGRectMake(0, 0, 367,0);
@@ -66,16 +69,16 @@
 
 #pragma mark - Padding Tests
 -(void)testThatLeftPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.left == PADDING,@"left padding should be set to correct value");
+    XCTAssertTrue(self.logicToTest.padding.left == PADDING_LEFT,@"left padding should be set to correct value");
 }
 -(void)testThatRightPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.right == PADDING,@"right padding should be set to correct value");
+    XCTAssertTrue(self.logicToTest.padding.right == PADDING_RIGHT,@"right padding should be set to correct value");
 }
 -(void)testThatBottomPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.bottom == PADDING,@"bottom padding should be set to correct value");
+    XCTAssertTrue(self.logicToTest.padding.bottom == PADDING_BOTTOM,@"bottom padding should be set to correct value");
 }
 -(void)testThatTopPaddingHasCorrectValue {
-    XCTAssertTrue(self.logicToTest.padding.top == PADDING,@"top padding should be set");
+    XCTAssertTrue(self.logicToTest.padding.top == PADDING_TOP,@"top padding should be set");
 }
 
 -(void)testThatLeftPaddingWorksCorrectly {
@@ -112,7 +115,7 @@
     
     for (int i = 0 ; i<self.logicToTest.numberOfItems; i++) {
         UICollectionViewLayoutAttributes * attributes = [layoutAttributes objectForKey:[NSIndexPath indexPathForItem:i inSection:0]];
-        XCTAssertTrue(attributes.frame.origin.y >= PADDING,@"top padding should be correctly applied to all layout Attributes");
+        XCTAssertTrue(attributes.frame.origin.y >= PADDING_TOP,@"top padding should be correctly applied to all layout Attributes");
     }
 }
 
@@ -124,7 +127,7 @@
     
     for (int i = 0 ; i<self.logicToTest.numberOfItems; i++) {
         UICollectionViewLayoutAttributes * attributes = [layoutAttributes objectForKey:[NSIndexPath indexPathForItem:i inSection:0]];
-        XCTAssertTrue(attributes.frame.origin.y+attributes.frame.size.height >= PADDING,@"bottom padding should be correctly applied to all layout Attributes");
+        XCTAssertTrue(attributes.frame.origin.y+attributes.frame.size.height >= PADDING_BOTTOM,@"bottom padding should be correctly applied to all layout Attributes");
     }
 }
 
