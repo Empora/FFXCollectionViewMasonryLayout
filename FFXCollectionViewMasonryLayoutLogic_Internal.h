@@ -18,7 +18,7 @@
 -(void)appendElement:(NSIndexPath*)item withMeasurementBlock:(FFXMeasureItemBlock)measurementBlock;
 -(CGFloat)getWidthOfItem;
 -(void)recalculateHeightOfAllElementsAfterFullspan:(NSMutableDictionary*)elementsAfterFullSpan;
--(NSInteger)getLastColumnWitLowestYValue;
+-(NSInteger)getLastColumnWithLowestYValue;
 -(CGFloat)highestValueOfAllLastColumns;
 -(CGFloat)lowestValueOfAllLastColumns;
 -(void)setLastYValueForAllColums:(NSNumber*)number;

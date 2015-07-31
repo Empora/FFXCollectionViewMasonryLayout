@@ -138,7 +138,7 @@
 
 -(void)appendElement:(NSIndexPath*)item withMeasurementBlock:(FFXMeasureItemBlock)measurementBlock {
     FFXCollectionViewLayoutAttributesMasonry * itemAttributes= [FFXCollectionViewLayoutAttributesMasonry layoutAttributesForCellWithIndexPath:item];
-    NSInteger columnWidthLowestYValue = [self getLastColumnWitLowestYValue];
+    NSInteger columnWidthLowestYValue = [self getLastColumnWithLowestYValue];
     // Calculating x-position
     CGFloat x = 0;
     if (columnWidthLowestYValue == 0) { // If item is first
@@ -216,9 +216,18 @@
     }
 }
 
--(NSInteger)getLastColumnWitLowestYValue{
-    NSNumber * minYValue = [self.lastYValueForColumns valueForKeyPath:@"@min.floatValue"];
-    return [self.lastYValueForColumns indexOfObject:minYValue];
+-(NSInteger)getLastColumnWithLowestYValue{
+    float minYValue = MAXFLOAT;
+    NSInteger lastColumn = NSNotFound;
+    int i = 0;
+    for (NSNumber * value in self.lastYValueForColumns) {
+        if ([value floatValue]< minYValue) {
+            minYValue = [value floatValue];
+            lastColumn = i;
+        }
+        ++i;
+    }
+    return lastColumn;
 }
 
 -(CGFloat)highestValueOfAllLastColumns{
@@ -264,5 +273,4 @@
         [self.allElementsAfterFullspan setObject:[NSMutableArray new] forKey:@(i)];
     }
 }
-
 @end
